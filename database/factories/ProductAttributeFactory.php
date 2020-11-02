@@ -28,7 +28,7 @@ $factory->define(ProductAttribute::class, function (Faker $faker) {
 
     ProductAttribute::create([
         'product_id'    => $product_id,
-        'photo'   => json_encode(["photo_2020-10-16_20-34-37.jpg", "photo_2020-10-16_20-34-37.jpg"]),
+        'photo'   => json_encode(["box.jpg", "box.jpg", "box.jpg"]),
         'color_attribute_id' => $faker->randomElement(ColorAttribute::pluck('id')->toArray()),
         'size_attribute_id'    => $faker->randomElement(SizeAttribute::pluck('id')->toArray()),
         'quantity'    => rand(1, 20),
