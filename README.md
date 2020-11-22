@@ -6,3 +6,5 @@
 -   php artisan migrate
 -   php artisan db:seed
 -   php artisan serve
+-   gmail => admin.home@gmail.com
+-   password => password
