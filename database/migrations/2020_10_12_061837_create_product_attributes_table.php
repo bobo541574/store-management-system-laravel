@@ -24,8 +24,12 @@ class CreateProductAttributesTable extends Migration
             $table->string('cost');         /* buyer price */
             $table->string('extra')->nullable();        /* buyer extra price */
             $table->string('description');
-            $table->boolean('status')->default(1);
+            $table->enum('status', ['On', 'Off'])->default('On');
+            $table->date('arrived', 0);
             $table->timestamps();
+            $table->softDeletes();
+
+            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
         });
     }
 

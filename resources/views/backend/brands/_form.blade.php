@@ -3,7 +3,7 @@
 <div class="form-group">
     <label for="name" class="col-form-label">{{ __('Name') }}</label>
 
-    <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name"
+    <input id="name" type="text" class="form-control form-control-sm @error('name') is-invalid @enderror" name="name"
         value="{{ old('name', $brand->name ?? '') }}" placeholder="eg. Apple, Sony, Dell, Mother Choice & ...."
         autocomplete="on" autofocus>
 
@@ -14,10 +14,10 @@
     @enderror
 </div>
 
-<div class="form-group">
+{{-- <div class="form-group">
     <label for="subcategory" class="col-form-label">{{ __('Sub Category') }}</label>
 
-    <select name="subcategory" id="subcategory" class="custom-select @error('subcategory') is-invalid @enderror"
+    <select name="subcategory" id="subcategory" class="custom-select custom-select-sm @error('subcategory') is-invalid @enderror"
         value="{{ old('subcategory') }}" autocomplete="off">
         <option value="">Choose Sub Category</option>
         @foreach ($subcategories as $subcategory)
@@ -32,7 +32,7 @@
         <strong>{{ $message }}</strong>
     </span>
     @enderror
-</div>
+</div> --}}
 
 
 <div class="form-group">
@@ -50,7 +50,7 @@
 
             <input type="file" id="photo" class="type_file custom-file-input @error('logo') is-invalid @enderror"
                 name="logo" value="{{ old('logo') }}" />
-            <label for="photo" id="label" class="custom-file-label">upload</label>
+            <label for="photo" id="label" class="custom-file-label col-form-label-sm">upload</label>
 
             @error('logo')
             <span class="invalid-feedback" role="alert">
@@ -84,5 +84,5 @@
 </div> --}}
 
 <div class="form-group">
-    <button class="btn btn-primary">{{ $buttonText }}</button>
+    <button class="btn btn-sm btn-primary">{{ $buttonText }}</button>
 </div>

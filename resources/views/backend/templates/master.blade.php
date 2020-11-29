@@ -6,7 +6,7 @@
     {{-- meta-tags --}}
     @include('backend.templates.meta-tags')
 
-    <title>{{ config('app.name', 'Inventory Management System') }}</title>
+    <title>Inventory Management System</title>
 
     {{-- styles --}}
     @include('backend.templates.styles')

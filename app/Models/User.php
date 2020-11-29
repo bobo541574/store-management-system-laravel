@@ -6,14 +6,18 @@ use App\Models\Contact;
 use App\Models\ModelHasRoles;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use Notifiable, HasRoles;
+    use Notifiable, HasRoles, SoftDeletes;
 
     public $roleArray = [];
+
+    // protected $primaryKey = 'uid';
+
     /**
      * The attributes that are mass assignable.
      *

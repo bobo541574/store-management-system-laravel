@@ -18,10 +18,14 @@ class CreateCheckoutsTable extends Migration
             $table->unsignedBigInteger('order_id');
             $table->unsignedBigInteger('payment_id');
             $table->string('discount')->default(0);
-            $table->string('total_price');
-            $table->dateTime('payment_date', 0);
-            $table->boolean('status')->default(1);
+            $table->string('quantity');
+            $table->unsignedDecimal('total_price', 10, 2);
+            $table->date('payment_date', 0);
+            $table->enum('status', ['On', 'Off'])->default('On');
             $table->timestamps();
+            $table->softDeletes();
+
+            $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
         });
     }
 

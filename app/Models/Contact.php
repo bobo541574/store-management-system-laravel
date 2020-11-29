@@ -7,9 +7,12 @@ use App\Models\User;
 use App\Models\State;
 use App\Models\Township;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Contact extends Model
 {
+    use SoftDeletes;
+
     protected $fillable = [
         'phone', 'address', 'township_id', 'city_id', 'state_id', 'email'
     ];

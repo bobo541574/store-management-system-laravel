@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="card shadow text-left">
-    <div class="card-header h3 text-primary font-weight-bold">Brand Edit</div>
+    <div class="card-header h5 text-primary font-weight-bold">Brand Edit</div>
     <div class="card-body">
         <form action="{{ route('brands.update', $brand->id) }}" method="post" enctype="multipart/form-data">
             @method('PUT')

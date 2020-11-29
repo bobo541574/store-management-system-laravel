@@ -96,10 +96,38 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Category $category)
+    public function destroy($id)
     {
+        Category::onlyTrashed()->findOrFail($id)->forceDelete();
+
+        return redirect()->route('categories.index')->with('success', 'Your category has been permenently deleted.');
+    }
+
+    /**
+     * Soft Delete the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function softDelete($id)
+    {
+        $category = Category::findOrFail($id);
         $category->delete();
 
-        return redirect()->route('categories.index')->with('success', 'Your category has been deleted.');
+        return redirect()->route('categories.index')->with('success', 'Your category has been moved to trash.');
+    }
+
+    public function trash()
+    {
+        $categories = Category::onlyTrashed()->get();
+
+        return view('backend.categories.index', compact('categories'));
+    }
+
+    public function restore($id)
+    {
+        $category = Category::onlyTrashed()->find($id)->restore();
+
+        return redirect()->route('categories.index')->with('success', 'Your category has been removed from trash.');
     }
 }

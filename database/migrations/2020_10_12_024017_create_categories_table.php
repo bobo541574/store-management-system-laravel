@@ -19,6 +19,7 @@ class CreateCategoriesTable extends Migration
             $table->string('name');
             $table->string('description')->default('This is a description of category');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

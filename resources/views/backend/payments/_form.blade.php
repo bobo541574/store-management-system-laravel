@@ -4,7 +4,7 @@
     <label for="name" class="col-form-label">{{ __('Name') }}</label>
 
     <input id="name" type="text"
-        class="form-control @error('name') is-invalid @enderror" name="name"
+        class="form-control form-control-sm @error('name') is-invalid @enderror" name="name"
         value="{{ old('name', $payment->name ?? '') }}" placeholder="eg. KBZPay, AYAPay & ...." autocomplete="name" autofocus>
 
     @error('name')
@@ -15,6 +15,6 @@
 </div>
 
 <div class="form-group">
-    <button class="btn btn-primary">{{ $buttonText }}</button>
+    <button class="btn btn-sm btn-primary">{{ $buttonText }}</button>
 </div>
 

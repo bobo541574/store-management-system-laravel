@@ -30,7 +30,7 @@
             <label for="product_price" class="col-form-label">{{ __('Product Price') }}</label>
 
             <input id="product_price" type="text" class="form-control form-control-sm" name="product_price"
-                value="{{ $attribute->price ?? $order->productAttr->price }} / MMK" autocomplete="on" disabled>
+                value="{{ formatted_money($attribute->price ?? $order->productAttr->price) }}" autocomplete="on" disabled>
         </div>
     </div>
     <div class="col-md-2">
@@ -38,7 +38,7 @@
             <label for="product_cost" class="col-form-label">{{ __('Product Cost') }}</label>
 
             <input id="product_cost" type="text" class="form-control form-control-sm" name="product_cost"
-                value="{{ $attribute->totalCost ?? $order->productAttr->totalCost }} / MMK" autocomplete="on" disabled>
+                value="{{ formatted_money($attribute->totalCost ?? $order->productAttr->totalCost) }}" autocomplete="on" disabled>
         </div>
     </div>
     <div class="col-md-2">
@@ -56,6 +56,7 @@
         <input type="hidden" name="product_attr_id" value="{{ $attribute->id ?? $order->productAttr->id }}">
         <input type="hidden" name="color" value="{{ $attribute->colorAttr->name ?? $order->productAttr->colorAttr->name }}">
         <input type="hidden" name="size" value="{{ $attribute->sizeAttr->letterNumber ?? $order->productAttr->sizeAttr->letterNumber }}">
+        <input type="hidden" name="price" value="{{ $attribute->price ?? $order->productAttr->price }}">
         <div class="form-group">
             <label for="name" class="col-form-label">{{ __('* Customer Name') }}</label>
 
@@ -88,7 +89,7 @@
             <label for="quantity" class="col-form-label">{{ __('* Quantity') }}</label>
 
             <input id="quantity" type="number"
-                class="form-control form-control-sm @error('quantity') is-invalid @enderror" name="quantity"
+                class="form-control form-control-sm @error('quantity') is-invalid @enderror" name="quantity" min="1"
                 value="{{ $order->quantity ?? old('quantity') }}" placeholder="0" autocomplete="on" autofocus>
 
             @error('quantity')
@@ -104,7 +105,7 @@
 
             <input id="order_date" type="date"
                 class="form-control form-control-sm @error('order_date') is-invalid @enderror" name="order_date"
-                value="{{ old('order_date') ?? ($order->order_date ?? '') }}" placeholder="0" autocomplete="on" autofocus>
+                value="{{ old('order_date') ?? ($order->ordered ?? '') }}" placeholder="0" autocomplete="on" autofocus>
 
             @error('order_date')
             <span class="invalid-feedback" role="alert">

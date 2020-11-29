@@ -24,6 +24,7 @@ class CreateContactsTable extends Migration
             $table->unsignedBigInteger('state_id');
             $table->string('email')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

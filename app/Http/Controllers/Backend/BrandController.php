@@ -29,9 +29,7 @@ class BrandController extends Controller
      */
     public function create()
     {
-        $subcategories = SubCategory::all();
-
-        return view('backend.brands.create', compact('subcategories'));
+        return view('backend.brands.create');
     }
 
     /**
@@ -51,7 +49,6 @@ class BrandController extends Controller
 
         Brand::create([
             'name'  => $request->name,
-            'subcategory_id'  => $request->subcategory,
             'logo'  => $logo,
         ]);
 
@@ -77,8 +74,7 @@ class BrandController extends Controller
      */
     public function edit(Brand $brand)
     {
-        $subcategories = SubCategory::all();
-        return view('backend.brands.edit', compact('brand', 'subcategories'));
+        return view('backend.brands.edit', compact('brand'));
     }
 
     /**
@@ -99,7 +95,6 @@ class BrandController extends Controller
 
         $brand = Brand::find($id);
         $brand->name = $request->name;
-        $brand->subcategory_id = $request->subcategory;
         $brand->logo = $logo ?? $request->logo;
         $brand->save();
 
@@ -112,10 +107,39 @@ class BrandController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Brand $brand)
+    public function destroy($id)
     {
-        $brand->delet();
+        Brand::onlyTrashed()->findOrFail($id)->forceDelete();
+
 
         return redirect()->route('brands.index')->with('success', 'Your brand has been deleted.');
+    }
+
+    /**
+     * Soft Delete the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function softDelete($id)
+    {
+        $brand = Brand::findOrFail($id);
+        $brand->delete();
+
+        return redirect()->route('brands.index')->with('success', 'Your brand has been moved to trash.');
+    }
+
+    public function trash()
+    {
+        $brands = Brand::onlyTrashed()->get();
+
+        return view('backend.brands.index', compact('brands'));
+    }
+
+    public function restore($id)
+    {
+        $brand = Brand::onlyTrashed()->find($id)->restore();
+
+        return redirect()->route('brands.index')->with('success', 'Your brand has been removed from trash.');
     }
 }

@@ -18,6 +18,7 @@ class CreateCitiesTable extends Migration
             $table->id();
             $table->unsignedBigInteger('state_id');
             $table->string('name');
+            $table->softDeletes();
         });
 
         // DB::table('cities')->insert([

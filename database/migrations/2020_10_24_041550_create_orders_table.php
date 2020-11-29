@@ -22,9 +22,12 @@ class CreateOrdersTable extends Migration
             $table->string('discount')->default(0);
             $table->string('customer_name');
             $table->string('phone')->nullable();
-            $table->dateTime('ordered', 0);
+            $table->date('ordered', 0);
             $table->boolean('status')->default(0);
             $table->timestamps();
+            $table->softDeletes();
+
+            $table->foreign('product_attr_id')->references('id')->on('product_attributes')->onDelete('cascade');
         });
     }
 

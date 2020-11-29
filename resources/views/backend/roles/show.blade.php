@@ -1,5 +1,5 @@
 @extends('backend.templates.master')
 
 @section('content')
-    <h3>Sub Category Detail</h3>
+    <h3>Role Detail</h3>
 @endsection

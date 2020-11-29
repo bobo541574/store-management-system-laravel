@@ -43,7 +43,7 @@ class SizeAttributeController extends Controller
             'number'    => $request->number ?? null,
         ]);
 
-        return view('backend.sizes.index')->with('success', 'You size has been created.');
+        return redirect()->route('sizes.index')->with('success', 'You size has been created.');
     }
 
     /**
@@ -81,7 +81,7 @@ class SizeAttributeController extends Controller
         $size->number    = $request->number ?? null;
         $size->save();
 
-        return view('backend.sizes.index')->with('success', 'You size has been updated.');
+        return redirect()->route('sizes.index')->with('success', 'You size has been updated.');
     }
 
     /**
@@ -94,6 +94,6 @@ class SizeAttributeController extends Controller
     {
         $size->delete();
 
-        return view('backend.sizes.index')->with('success', 'You size has been updated.');
+        return redirect()->route('sizes.index')->with('success', 'You size has been updated.');
     }
 }

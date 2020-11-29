@@ -17,6 +17,7 @@ class CreateSizeAttributesTable extends Migration
             $table->id();
             $table->string('letter')->nullable();
             $table->string('number')->nullable();
+            $table->softDeletes();
         });
     }
 

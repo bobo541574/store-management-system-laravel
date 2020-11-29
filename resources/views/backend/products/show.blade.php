@@ -4,7 +4,7 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card shadow text-left">
-                <div class="card-header h3 text-primary font-weight-bold">
+                <div class="card-header h5 text-primary font-weight-bold">
                     Product Detail
                 </div>
               <div class="card-body">

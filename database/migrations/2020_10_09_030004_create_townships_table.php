@@ -18,6 +18,7 @@ class CreateTownshipsTable extends Migration
             $table->id('id');
             $table->unsignedBigInteger('city_id');
             $table->string('name');
+            $table->softDeletes();
         });
 
         // DB::table('townships')->insert([

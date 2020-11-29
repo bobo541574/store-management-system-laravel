@@ -10,7 +10,7 @@
 <div class="row justify-content-center">
     <div class="col-md-12">
         <div class="card shadow text-left">
-            <div class="card-header h3 text-primary font-weight-bold">Product Create</div>
+            <div class="card-header h5 text-primary font-weight-bold">Product Create</div>
             <div class="card-body">
                 <form action="{{ route('products.store') }}" method="post" enctype="multipart/form-data">
                     @include('backend.products._form', [
@@ -27,25 +27,6 @@
 
 <script>
     document.addEventListener("DOMContentLoaded", () => {
-
-        // let color_manual = document.querySelector('#color_manual');
-
-        // color_manual.addEventListener('click', function(e) {
-        //     let manual = document.querySelector('#manual');
-        //     let color = document.querySelector('#color');
-        //     if(e.target.checked) {
-        //         color.setAttribute('disabled', 'disabled');
-        //         manual.removeAttribute('disabled');
-        //     } else {
-        //         manual.setAttribute('disabled', 'disabled');
-        //         color.removeAttribute('disabled');
-        //     }
-        // })
-
-        /* Start - logo preview */
-        // let box = document.querySelector('#box');
-        // let preview = document.querySelector('#preview');
-
 
         // photoUpload(photo, preview, box, false);
         let add = document.querySelector('#add');
@@ -96,9 +77,24 @@
 
                     <div class="col-md-2">
                         <div class="form-group">
+                            <label for="arrived" class="col-form-label">{{ __('Arrived') }}</label>
+
+                            <input id="arrived_${index}" type="date" class="form-control form-control-sm @error('arrived') is-invalid @enderror" 
+                                name="row[${index}][arrived]" value="{{ old('arrived') }}">
+
+                            @error('arrived')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div class="col-md-2">
+                        <div class="form-group">
                             <label for="color" class="col-form-label mx-auto">{{ __('Color') }}</label>
 
-                            <select name="row[${index}][color]" id="color_${index}" class="custom-select @error('row.${index}.color') is-invalid @enderror"
+                            <select name="row[${index}][color]" id="color_${index}" class="custom-select custom-select-sm @error('row.${index}.color') is-invalid @enderror"
                                 value="{{ old('color') }}" autocomplete="off">
                                 <option value="">Choose color</option>
                                 @foreach ($colors as $color)
@@ -120,7 +116,7 @@
                         <div class="form-group">
                             <label for="size" class="col-form-label  mx-auto">{{ __('Size') }}</label>
 
-                            <select name="row[${index}][size]" id="size_${index}" class="custom-select @error('row.${index}.size') is-invalid @enderror"
+                            <select name="row[${index}][size]" id="size_${index}" class="custom-select custom-select-sm @error('row.${index}.size') is-invalid @enderror"
                                 value="{{ old('size') }}" autocomplete="off">
                                 <option value="">Choose size</option>
                                 @foreach ($sizes as $size)
@@ -141,7 +137,7 @@
                         <div class="form-group">
                             <label for="quantity_${index}" class="col-form-label  mx-auto">{{ __('Quantity') }}</label>
 
-                            <input name="row[${index}][quantity]" id="quantity_${index}" class="form-control @error('row.${index}.quantity') is-invalid @enderror"
+                            <input name="row[${index}][quantity]" id="quantity_${index}" class="form-control form-control-sm @error('row.${index}.quantity') is-invalid @enderror"
                                 type="number" value="{{ old('quantity') }}" onclick="priceCalculator(${index})" autocomplete="on" placeholder="0">
 
                             @error('row.${index}.quantity')
@@ -157,7 +153,7 @@
                         <div class="form-group">
                             <label for="price_${index}" class="col-form-label  mx-auto">{{ __('Price') }}</label>
 
-                            <input name="row[${index}][price]" id="price_${index}" class="form-control @error('row.${index}.price') is-invalid @enderror" type="number"
+                            <input name="row[${index}][price]" id="price_${index}" class="form-control form-control-sm @error('row.${index}.price') is-invalid @enderror" type="number"
                                 value="{{ old('price') }}" onclick="priceCalculator(${index})" autocomplete="on" placeholder="0">
 
                             @error('row.${index}.price')
@@ -173,7 +169,7 @@
                         <div class="form-group">
                             <label for="total_price_${index}" class="col-form-label  mx-auto">{{ __('Total Price') }}</label>
 
-                            <input name="row[${index}][total_price]" id="total_price_${index}" class="form-control @error('row.${index}.total_price') is-invalid @enderror" type="number"
+                            <input name="row[${index}][total_price]" id="total_price_${index}" class="form-control form-control-sm @error('row.${index}.total_price') is-invalid @enderror" type="number"
                                 value="{{ old('total_price') }}" autocomplete="on" placeholder="0" disabled>
 
                             @error('row.${index}.total_price')
@@ -189,7 +185,7 @@
                         <div class="form-group">
                             <label for="cost" class="col-form-label  mx-auto">{{ __('Cost') }}</label>
 
-                            <input name="row[${index}][cost]" id="cost_${index}" class="form-control @error('row.${index}.cost') is-invalid @enderror" type="number"
+                            <input name="row[${index}][cost]" id="cost_${index}" class="form-control form-control-sm @error('row.${index}.cost') is-invalid @enderror" type="number"
                                 value="{{ old('cost') }}" onclick="costCalculator(${index})" autocomplete="on" placeholder="0">
 
                             @error('row.${index}.cost')
@@ -205,7 +201,7 @@
                         <div class="form-group">
                             <label for="total_cost" class="col-form-label  mx-auto">{{ __('Total Cost') }}</label>
 
-                            <input name="row[${index}][total_cost]" id="total_cost_${index}" class="form-control @error('row.${index}.total_cost') is-invalid @enderror" type="number"
+                            <input name="row[${index}][total_cost]" id="total_cost_${index}" class="form-control form-control-sm @error('row.${index}.total_cost') is-invalid @enderror" type="number"
                                 value="{{ old('total_cost') }}" autocomplete="on" placeholder="0" disabled>
 
                             @error('row.${index}.total_cost')
@@ -221,11 +217,11 @@
                         <div class="form-group">
                             <label for="status" class="col-form-label">{{ __('Status') }}</label>
 
-                            <select name="row[${index}][status]" id="status_${index}" class="custom-select @error('row.${index}.status') is-invalid @enderror"
+                            <select name="row[${index}][status]" id="status_${index}" class="custom-select custom-select-sm @error('row.${index}.status') is-invalid @enderror"
                                 value="{{ old('status') }}" autocomplete="off">
                                 <option value="">Choose status</option>
-                                <option value="1">On</option>
-                                <option value="0">Off</option>
+                                <option value="On">On</option>
+                                <option value="Off">Off</option>
                             </select>
 
                             @error('row.${index}.status')
@@ -243,7 +239,7 @@
                             <div class="custom-file">
                                 <input type="file" id="photo_${index}" class="custom-file-input @error('row.${index}.photo') is-invalid @enderror"
                                     name="row[${index}][photo][]" value="{{ old('photo') }}" multiple />
-                                <label for="photo" class="custom-file-label">Photo Upload</label>
+                                <label for="photo" class="custom-file-label col-form-label-sm">Photo Upload</label>
                     
                                 @error('row.${index}.photo')
                                 <span class="invalid-feedback" role="alert">

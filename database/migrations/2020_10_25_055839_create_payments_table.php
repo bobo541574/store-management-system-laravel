@@ -17,7 +17,9 @@ class CreatePaymentsTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('description')->default('This is a demo payment');
+            $table->enum('status', ['On', 'Off'])->default('On');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

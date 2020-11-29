@@ -51,6 +51,7 @@ class CheckoutController extends Controller
             Checkout::create([
                 'order_id'  => $request->order_id,
                 'discount'  => $request->discount ?? 0,
+                'quantity'  => $request->quantity,
                 'total_price'   => $request->total_price,
                 'payment_id'    => $request->payment_type,
                 'payment_date'  => $request->payment_date,
@@ -106,6 +107,7 @@ class CheckoutController extends Controller
         try {
             $checkout = new Checkout();
             $checkout->order_id  = $request->order_id;
+            $checkout->quantity  = $request->quantity;
             $checkout->discount  = $request->discount ?? 0;
             $checkout->total_price   = $request->total_price;
             $checkout->payment_id    = $request->payment_type;

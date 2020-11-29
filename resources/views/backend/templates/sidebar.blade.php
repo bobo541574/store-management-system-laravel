@@ -40,6 +40,7 @@ background: linear-gradient(to bottom, #24243e, #302b63, #0f0c29); /* W3C, IE 10
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Category Menu:</h6>
                 <a class="collapse-item" href="{{ route('categories.index') }}">Category List</a>
+                <a class="collapse-item" href="{{ route('categories.trash') }}">Category Trash</a>
                 <a class="collapse-item" href="{{ route('categories.create') }}">Category Create</a>
             </div>
         </div>
@@ -56,6 +57,7 @@ background: linear-gradient(to bottom, #24243e, #302b63, #0f0c29); /* W3C, IE 10
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Sub Category Menu:</h6>
                 <a class="collapse-item" href="{{ route('subcategories.index') }}">Sub Category List</a>
+                <a class="collapse-item" href="{{ route('subcategories.trash') }}">Sub Category Trash</a>
                 <a class="collapse-item" href="{{ route('subcategories.create') }}">Sub Category Create</a>
             </div>
         </div>
@@ -63,8 +65,8 @@ background: linear-gradient(to bottom, #24243e, #302b63, #0f0c29); /* W3C, IE 10
 
     <!-- Nav Item - Brand Menu -->
     <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#brandmenu"
-            aria-expanded="true" aria-controls="brandmenu">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#brandmenu" aria-expanded="true"
+            aria-controls="brandmenu">
             <i class="fas fa-band-aid"></i>
             <span class="font-weight-bold">Brand</span>
         </a>
@@ -72,6 +74,7 @@ background: linear-gradient(to bottom, #24243e, #302b63, #0f0c29); /* W3C, IE 10
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Brand Menu:</h6>
                 <a class="collapse-item" href="{{ route('brands.index') }}">Brand List</a>
+                <a class="collapse-item" href="{{ route('brands.trash') }}">Brand Trash</a>
                 <a class="collapse-item" href="{{ route('brands.create') }}">Brand Create</a>
             </div>
         </div>
@@ -79,8 +82,8 @@ background: linear-gradient(to bottom, #24243e, #302b63, #0f0c29); /* W3C, IE 10
 
     <!-- Nav Item - Supplier Menu -->
     <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#suppliermenu"
-            aria-expanded="true" aria-controls="suppliermenu">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#suppliermenu" aria-expanded="true"
+            aria-controls="suppliermenu">
             <i class="fas fa-paper-plane"></i>
             <span class="font-weight-bold">Supplier</span>
         </a>
@@ -95,8 +98,8 @@ background: linear-gradient(to bottom, #24243e, #302b63, #0f0c29); /* W3C, IE 10
 
     <!-- Nav Item - Payment Menu -->
     <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#paymentmenu"
-            aria-expanded="true" aria-controls="paymentmenu">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#paymentmenu" aria-expanded="true"
+            aria-controls="paymentmenu">
             <i class="fas fa-money-check-alt"></i>
             <span class="font-weight-bold">Payment</span>
         </a>
@@ -109,18 +112,18 @@ background: linear-gradient(to bottom, #24243e, #302b63, #0f0c29); /* W3C, IE 10
         </div>
     </li>
 
-     <!-- Divider -->
-     <hr class="sidebar-divider">
+    <!-- Divider -->
+    <hr class="sidebar-divider">
 
-     <!-- Heading -->
-     <div class="sidebar-heading">
-         Product Manage
-     </div>
+    <!-- Heading -->
+    <div class="sidebar-heading">
+        Product Manage
+    </div>
 
     <!-- Nav Item - Color Menu -->
     <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#colormenu"
-            aria-expanded="true" aria-controls="colormenu">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#colormenu" aria-expanded="true"
+            aria-controls="colormenu">
             <i class="fas fa-palette"></i>
             <span class="font-weight-bold">Color</span>
         </a>
@@ -135,8 +138,8 @@ background: linear-gradient(to bottom, #24243e, #302b63, #0f0c29); /* W3C, IE 10
 
     <!-- Nav Item - Size Menu -->
     <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#sizemenu"
-            aria-expanded="true" aria-controls="sizemenu">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#sizemenu" aria-expanded="true"
+            aria-controls="sizemenu">
             <i class="fas fa-text-width"></i>
             <span class="font-weight-bold">Size</span>
         </a>
@@ -151,8 +154,8 @@ background: linear-gradient(to bottom, #24243e, #302b63, #0f0c29); /* W3C, IE 10
 
     <!-- Nav Item - Product Menu -->
     <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#productmenu"
-            aria-expanded="true" aria-controls="productmenu">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#productmenu" aria-expanded="true"
+            aria-controls="productmenu">
             <i class="fab fa-product-hunt"></i>
             <span class="font-weight-bold">Product</span>
         </a>
@@ -187,6 +190,35 @@ background: linear-gradient(to bottom, #24243e, #302b63, #0f0c29); /* W3C, IE 10
             <i class="fas fa-cash-register"></i>
             <span class="font-weight-bold">Check Out List</span></a>
     </li>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider">
+
+    <!-- Heading -->
+    <div class="sidebar-heading">
+        Report
+    </div>
+
+    <!-- Nav Item - Product Report -->
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('reports.products') }}">
+            <i class="fa fa-clipboard" aria-hidden="true"></i>
+            <span class="font-weight-bold">Product Report</span></a>
+    </li>
+
+    <!-- Nav Item - Order Report -->
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('reports.orders') }}">
+            <i class="fa fa-clipboard" aria-hidden="true"></i>
+            <span class="font-weight-bold">Order Report</span></a>
+    </li>
+
+    <!-- Nav Item - Check Out Menu -->
+    {{-- <li class="nav-item">
+        <a class="nav-link" href="{{ route('checkouts.index') }}">
+    <i class="fas fa-cash-register"></i>
+    <span class="font-weight-bold">Check Out List</span></a>
+    </li> --}}
 
     <!-- Divider -->
     <hr class="sidebar-divider">
@@ -248,9 +280,9 @@ background: linear-gradient(to bottom, #24243e, #302b63, #0f0c29); /* W3C, IE 10
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">State Menu:</h6>
                 <a class="collapse-item" href="{{ route('states.index') }}">State List</a>
-                <a class="collapse-item" href="{{ route('states.create') }}">State Create</a>
-            </div>
-        </div>
+    <a class="collapse-item" href="{{ route('states.create') }}">State Create</a>
+    </div>
+    </div>
     </li> --}}
 
     <!-- Nav Item - City Menu -->

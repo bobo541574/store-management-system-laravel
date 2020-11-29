@@ -30,7 +30,7 @@
             <label for="product_price" class="col-form-label">{{ __('Product Price') }}</label>
 
             <input id="product_price" type="text" class="form-control form-control-sm" name="product_price"
-                value="{{ $order->productAttr->price }} / MMK" autocomplete="on" disabled>
+                value="{{ formatted_money($order->productAttr->price) }}" autocomplete="on" disabled>
         </div>
     </div>
     <div class="col-md-2">
@@ -38,7 +38,7 @@
             <label for="product_cost" class="col-form-label">{{ __('Product Cost') }}</label>
 
             <input id="product_cost" type="text" class="form-control form-control-sm" name="product_cost"
-                value="{{ $order->productAttr->totalCost }} / MMK" autocomplete="on" disabled>
+                value="{{ formatted_money($order->productAttr->total_cost) }}" autocomplete="on" disabled>
         </div>
     </div>
     <div class="col-md-2">
@@ -71,17 +71,19 @@
             <label for="quantity" class="col-form-label">{{ __('* Quantity') }}</label>
 
             <input id="quantity" type="text"
-                class="form-control form-control-sm" name="quantity"
-                value="{{ $order->quantity }}" placeholder="0" disabled autocomplete="on" autofocus>
+                class="form-control form-control-sm" name="quantity" min="1"
+                value="{{ $order->quantity }}" placeholder="0" readonly autocomplete="on" autofocus>
         </div>
     </div>
     <div class="col-md-2">
         <div class="form-group">
-            <label for="price_discount" class="col-form-label">{{ __('Price (with discount)') }}</label>
+            <label for="price_discount" class="col-form-label" title="discount - ({{ formatted_money($order->discount) }})" data-toggle="title">{{ __('Price (with discount)') }}</label>
 
-            <input id="price_discount" type="text"
-                class="form-control form-control-sm" name="price_discount"
-                value="{{ $order->totalPrice }} / MMK - ({{ $order->discount }})" placeholder="0" disabled autocomplete="on" autofocus>
+            <input id="price_discount" type="hidden" name="price_discount"
+                value="{{ $order->total_price }}">
+            
+            <input type="text" class="form-control form-control-sm"
+                value="{{ formatted_money($order->total_price) }}" placeholder="0"  title="discount - ({{ formatted_money($order->discount) }})" data-toggle="title" disabled autocomplete="on" autofocus>
         </div>
     </div>
 </div>
@@ -107,9 +109,11 @@
     <div class="col-md-2">
         <div class="form-group">
             <label for="total_price" class="col-form-label">{{ __('* Total Price') }}</label>
-            <input type="hidden" name="total_price" id="actual_price" value="">
+
+            <input type="hidden" name="total_price" id="actual_price" value="{{ $checkout->total_price ?? old('total_price') }}">
+            
             <input id="total_price" type="text" class="form-control form-control-sm @error('total_price') is-invalid @enderror"
-                name="total_price" value="{{ $checkout->total_price ?? old('total_price') }}" placeholder=" / MMK" disabled autocomplete="on" autofocus>
+                value="{{ formatted_money($checkout->total_price ?? old('total_price')) }}" placeholder=" 0.000 / MMK" readonly autocomplete="on" autofocus>
 
             @error('total_price')
             <span class="invalid-feedback" role="alert">

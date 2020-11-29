@@ -25,7 +25,6 @@ class BrandRequest extends FormRequest
     {
         return [
             'name'  => 'required',
-            'subcategory'   => 'required',
             'logo'  => 'required'
         ];
     }
@@ -34,7 +33,6 @@ class BrandRequest extends FormRequest
     {
         return [
             'name.required' => 'Brand is required',
-            'subcategory.required'   => 'Sub Category is required',
             'logo.required'   => 'Logo is required',
         ];
     }

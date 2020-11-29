@@ -2,30 +2,32 @@
     <table class="table table-striped table-inverse table-hover text-center" id="orders">
         <thead class="thead-inverse table-header">
             <tr>
-                <th style="">Customer Name</th>
-                <th style="">Order ID</th>
-                <th style="">Quantity</th>
-                <th style="">Price</th>
                 <th style="width: 15%">Order Date</th>
-                <th style="width: 20%">Action</th>
+                <th style="width: 20%">Customer Name</th>
+                <th style="width: 20%">Order ID</th>
+                <th style="width: 10%">Quantity</th>
+                <th style="width: 15%">Price</th>
+                <th style="width: 15%">Total Price</th>
+                <th style="width: 15%">Action</th>
             </tr>
         </thead>
-        <tbody class="text-primary font-weight-bold">
+        <tbody class="text-primary small font-weight-bold">
             @foreach ($orders as $key => $order)
             <tr>
+                <td class="align-middle"><span class=""> {{ $order->order_date }} </span></td>
                 <td class="align-middle">
-                    <span class="badge badge-dark">
+                    <span class="">
                         {{ $order->customer_name }}
                     </span>
                 </td>
                 <td class="align-middle">
-                    <span class="small">
+                    <span>
                         {{ $order->order_code }}
                     </span>
                 </td>
-                <td class="align-middle"><span class="badge badge-primary"> {{ $order->quantity }} </span></td>
-                <td class="align-middle"><span class="badge badge-primary"> {{ $order->totalPrice }} /MMK </span></td>
-                <td class="align-middle"><span class="badge badge-warning"> {{ $order->order_date }} </span></td>
+                <td class="align-middle"><span class=""> {{ $order->quantity }} </span></td>
+                <td class="align-middle"><span class=""> {{ formatted_money($order->price) }} </span></td>
+                <td class="align-middle"><span class=""> {{ formatted_money($order->total_price) }} </span></td>
                 <td class="align-middle">
                     {{-- table action --}}
                     <div class="row justify-content-center">

@@ -14,7 +14,7 @@
             <tr>
                 <td class="align-middle">{{ ++$key }}</td>
                 <td class="align-middle">{{ $supplier->name }}</td>
-                <td class="align-middle"><span class="badge badge-primary"> {{ $supplier->contacts()->first()->phone ?? '' }} </span></td>
+                <td class="align-middle"><a href="tel:{{$supplier->contacts()->first()->phone ?? ''}}" class="text text-decoration-none" title="Phone Call">  {{ $supplier->contacts()->first()->phone ?? '' }} </a></td>
                 <td class="align-middle"><img src="{{ $supplier->photo }}" width="45px" alt="logo"></td>
                 <td class="align-middle">
                     {{-- table action --}}

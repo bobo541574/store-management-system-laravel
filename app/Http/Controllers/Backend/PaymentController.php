@@ -46,7 +46,7 @@ class PaymentController extends Controller
             'name'  => $request->name
         ]);
 
-        return view('backend.payments.index')->with('success', 'Your payment method has been created.');
+        return redirect()->route('payments.index')->with('success', 'Your payment method has been created.');
     }
 
     /**
@@ -87,7 +87,7 @@ class PaymentController extends Controller
         $payment->name = $request->name;
         $payment->save();
 
-        return view('backend.payments.index')->with('success', 'Your payment method has been updated.');
+        return redirect()->route('payments.index')->with('success', 'Your payment method has been updated.');
     }
 
     /**
@@ -100,6 +100,6 @@ class PaymentController extends Controller
     {
         $payment->delete();
 
-        return view('backend.payments.index')->with('success', 'Your payment method has been deleted.');
+        return redirect()->route('payments.index')->with('success', 'Your payment method has been deleted.');
     }
 }

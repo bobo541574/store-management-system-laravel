@@ -16,7 +16,8 @@ class CreateColorAttributesTable extends Migration
         Schema::create('color_attributes', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('color_code');
+            $table->string('color_code')->nullable();
+            $table->softDeletes();
         });
     }
 

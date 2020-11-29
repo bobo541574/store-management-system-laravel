@@ -24,34 +24,36 @@ class ProductRequest extends FormRequest
     public function rules()
     {
         $rules = [
-            'arrived'   => 'required',
             'product_code'   => 'required',
             'name'   => 'required',
-            'brand'   => 'required',
             'supplier'   => 'required',
+            'subcategory'   => 'required',
+            'brand'   => 'required',
             'row.*.color'   => 'required',
             'row.*.size'   => 'required',
             'row.*.quantity'   => 'required',
             'row.*.price'   => 'required',
             'row.*.cost'   => 'required',
             'row.*.status'   => 'required',
+            'row.*.arrived'   => 'required',
             'row.*.photo'   => 'if_else:()required',
         ];
 
         for ($i = 0; $i < count(request('row')); $i++) {
             $photo = (request('row')[$i]['old_photo'] ?? 'photo');
             $rules = [
-                'arrived'   => 'required',
                 'product_code'   => 'required',
                 'name'   => 'required',
-                'brand'   => 'required',
                 'supplier'   => 'required',
+                'subcategory'   => 'required',
+                'brand'   => 'required',
                 'row.*.color'   => 'required',
                 'row.*.size'   => 'required',
                 'row.*.quantity'   => 'required',
                 'row.*.price'   => 'required',
                 'row.*.cost'   => 'required',
                 'row.*.status'   => 'required',
+                'row.*.arrived'   => 'required',
                 'row.*.photo'   => 'required_with:photo',
             ];
             // $rules = [
@@ -80,17 +82,18 @@ class ProductRequest extends FormRequest
     public function messages()
     {
         return [
-            'arrived.required' => 'Arrived date is required',
             'product_code.required' => 'Product code is required',
             'name.required' => 'name is required',
-            'brand.required' => 'Brand is required',
             'supplier.required' => 'Supplier is required',
+            'subcategory.required' => 'Sub Category is required',
+            'brand.required' => 'Brand is required',
             'row.*.color.required' => 'Color is required',
             'row.*.size.required' => 'Size is required',
             'row.*.quantity.required' => 'Quantity is required',
             'row.*.price.required' => 'Price is required',
             'row.*.cost.required' => 'Cost is required',
             'row.*.status.required' => 'Status is required',
+            'row.*.arrived.required' => 'Arrived date is required',
             'row.*.photo.required' => 'Photo is required',
         ];
     }

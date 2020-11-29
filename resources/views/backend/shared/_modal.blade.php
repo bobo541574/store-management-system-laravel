@@ -18,7 +18,7 @@
                     @csrf
                     @method('DELETE')
                     <input type="hidden" name="quantity" value="{{ $quantity ?? '' }}">
-                    <button type="submit" class="btn btn-sm btn-danger" title="subcategory delete"
+                    <button type="submit" class="btn btn-sm btn-danger" title="delete"
                         data-toggle="tooltip"><i class="fa fa-check-circle"></i> Confirm</button>
                 </form>
             </div>

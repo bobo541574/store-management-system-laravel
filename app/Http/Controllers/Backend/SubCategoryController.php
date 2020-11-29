@@ -101,4 +101,32 @@ class SubCategoryController extends Controller
 
         return redirect()->route('subcategories.index')->with('success', 'Your sub category has been deleted.');
     }
+
+    /**
+     * Soft Delete the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function softDelete($id)
+    {
+        $subcategory = SubCategory::findOrFail($id);
+        $subcategory->delete();
+
+        return redirect()->route('subcategories.index')->with('success', 'Your subcategory has been moved to trash.');
+    }
+
+    public function trash()
+    {
+        $subcategories = SubCategory::onlyTrashed()->get();
+
+        return view('backend.subcategories.index', compact('subcategories'));
+    }
+
+    public function restore($id)
+    {
+        $subcategory = SubCategory::onlyTrashed()->find($id)->restore();
+
+        return redirect()->route('subcategories.index')->with('success', 'Your subcategory has been removed from trash.');
+    }
 }

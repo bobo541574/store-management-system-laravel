@@ -15,7 +15,7 @@
 
                 <input type="file" id="photo" class="type_file custom-file-input @error('logo') is-invalid @enderror"
                     name="logo" value="{{ old('logo') }}" />
-                <label for="photo" id="label" class="custom-file-label">upload</label>
+                <label for="photo" id="label" class="custom-file-label col-form-label-sm">upload</label>
 
                 @error('logo')
                 <span class="invalid-feedback" role="alert">
@@ -34,7 +34,7 @@
         <div class="form-group">
             <label for="name" class="col-form-label">{{ __('* Company Name') }}</label>
 
-            <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name"
+            <input id="name" type="text" class="form-control form-control-sm @error('name') is-invalid @enderror" name="name"
                 value="{{ old('name', $user->name ?? '') }}" placeholder="John Doe" autocomplete="on" autofocus>
 
             @error('name')
@@ -71,7 +71,7 @@
 
 <div class="col-md-3 offset-md-9">
     <div class="form-group mb-0">
-        <button type="submit" id="submit" class="btn btn-primary col-md-12">
+        <button type="submit" id="submit" class="btn btn-sm btn-primary col-md-12">
             {{ $buttonText }}
         </button>
     </div>

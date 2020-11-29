@@ -3,11 +3,14 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ProductAttribute extends Model
 {
+    use SoftDeletes;
+
     protected $fillable = [
-        'product_id', 'photo', 'color_attribute_id', 'size_attribute_id', 'quantity', 'price', 'cost', 'description', 'status'
+        'product_id', 'photo', 'color_attribute_id', 'size_attribute_id', 'quantity', 'price', 'cost', 'description', 'status', 'arrived'
     ];
 
     protected $appends = [
@@ -16,7 +19,7 @@ class ProductAttribute extends Model
 
     public function product()
     {
-        return $this->belongsTo(Product::class);
+        return $this->belongsTo(Product::class)->orderBy('arrived', 'DESC');
     }
 
     public function colorAttr()
@@ -60,6 +63,6 @@ class ProductAttribute extends Model
 
     public function getTotalCostAttribute()
     {
-        return number_format(($this->cost + $this->extra), 3);
+        return ($this->cost + $this->extra);
     }
 }

@@ -18,8 +18,11 @@ class CreateSubCategoriesTable extends Migration
             $table->unsignedBigInteger('category_id');
             $table->string('name');
             $table->string('description')->default('This is a description of sub category');
-            $table->boolean('status')->default(1);
+            $table->enum('status', ['On', 'Off'])->default('On');
             $table->timestamps();
+            $table->softDeletes();
+
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
         });
     }
 

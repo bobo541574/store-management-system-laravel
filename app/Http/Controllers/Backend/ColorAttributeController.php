@@ -46,7 +46,7 @@ class ColorAttributeController extends Controller
             'name'  => $request->name
         ]);
 
-        return view('backend.colors.index')->with('success', 'Your color has been created.');
+        return redirect()->route('colors.index')->with('success', 'Your color has been created.');
     }
 
     /**
@@ -83,7 +83,7 @@ class ColorAttributeController extends Controller
         $color->name = $request->name;
         $color->save();
 
-        return view('backend.colors.index')->with('success', 'Your color has been updated.');
+        return redirect()->route('colors.index')->with('success', 'Your color has been updated.');
     }
 
     /**
@@ -96,6 +96,6 @@ class ColorAttributeController extends Controller
     {
         $color->delete();
 
-        return view('backend.colors.index')->with('success', 'Your color has been deleted.');
+        return redirect()->route('colors.index')->with('success', 'Your color has been deleted.');
     }
 }

@@ -106,5 +106,7 @@ class UserController extends Controller
         $user = User::findOrFail($request->user_id);
 
         $user->syncRoles($request->get('role'));
+
+        return redirect()->route('users.index')->with('success', "Your user roles has been assigned.");
     }
 }

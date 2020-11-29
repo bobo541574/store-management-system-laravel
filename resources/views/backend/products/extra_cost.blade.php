@@ -3,12 +3,12 @@
 @section('content')
 <div class="col-md-12">
     <div class="card text-left shadow">
-        <div class="card-header h3 text-primary font-weight-bold">
+        <div class="card-header h5 text-primary font-weight-bold">
             Product List of Supplier
         </div>
         <div class="card-body">
             @include('backend.shared._messages')
-            @include('backend.products._extra', ['productsArrived' => $products])
+            @include('backend.products._extra', ['productAttrs' => $productArrivedBySupplier])
             
         </div>
     </div>
@@ -19,10 +19,16 @@
 <script>
     $(document).ready(function () {
         $('#products').DataTable({
-            "order": [ 1, 'desc' ],
+            // "order": [ 0, 'desc' ],
         });
+
+        
     });
-    let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+    function editExtra(id) {
+        let extra = document.querySelector(`.extra_${id}`);
+        extra.removeAttribute("disabled");
+    }
 
 </script>
 @endpush

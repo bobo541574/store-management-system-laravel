@@ -58,11 +58,15 @@ class OrderController extends Controller
                 'customer_name'  => $request->name,
                 'phone' => $request->phone,
                 'quantity'  => $request->quantity,
+                'price' => $request->price,
                 'ordered'  => $request->order_date,
                 'discount'  => $request->discount ?? 0,
             ]);
 
-            ProductAttribute::findOrFail($request->product_attr_id)->decrement('quantity', $request->quantity);
+            $attribute = ProductAttribute::findOrFail($request->product_attr_id);
+            $attribute->quantity = $attribute->quantity - $request->quantity;
+            $attribute->save();
+            // ProductAttribute::findOrFail($request->product_attr_id)->decrement('quantity', $request->quantity);
 
             DB::commit();
         } catch (\Exception $e) {
@@ -119,11 +123,14 @@ class OrderController extends Controller
             $order->phone = $request->phone;
             $quantity = ($request->quantity > $order->quantity) ? ($request->quantity - $order->quantity) : ($order->quantity - $request->quantity);
             $order->quantity  = $request->quantity;
+            $order->price  = $request->price;
             $order->ordered = $request->order_date;
             $order->discount  = $request->discount ?? 0;
             $order->save();
 
-            ProductAttribute::findOrFail($request->product_attr_id)->decrement('quantity', $quantity);
+            $attribute = ProductAttribute::findOrFail($request->product_attr_id);
+            $attribute->quantity = $attribute->quantity - $quantity;
+            $attribute->save();
 
             DB::commit();
         } catch (\Exception $e) {

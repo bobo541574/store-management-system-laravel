@@ -11,7 +11,7 @@ class CheckoutSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Models\Checkout::class, 30)->create()->each(function ($checkout) {
+        factory(App\Models\Checkout::class, 80)->create()->each(function ($checkout) {
             $checkout->order->toggleStatus()->save();
         });
     }

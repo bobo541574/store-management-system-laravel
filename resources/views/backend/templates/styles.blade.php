@@ -78,8 +78,8 @@
         font-size: inherit;
         font-weight: 500;
         outline: none;
-        width: 100%;
-        height: 28px;
+        width: 50%;
+        height: 26px;
         padding: 3px 0;
         position: relative;
         vertical-align: middle;

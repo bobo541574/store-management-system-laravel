@@ -17,7 +17,7 @@ $factory->define(Order::class, function (Faker $faker) {
     $size = $letter . '-' . $number;
     $name = $faker->name;
     $order_code = 'OID' . date('-d-m-y-h-i-s-') . strtolower($color) . '-' . str_replace('-', '', $size) . '-' . str_replace(' ', '', strtolower($faker->name));
-    $order_date = $faker->dateTimeBetween('2020-07-01', '2020-11-30');
+    $order_date = $faker->dateTimeBetween('2020-04-01', '2020-11-30');
 
     Order::create([
         'product_attr_id'   => $product_id,

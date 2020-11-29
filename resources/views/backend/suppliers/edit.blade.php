@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="card shadow text-left">
-        <div class="card-header h3 text-primary font-weight-bold">Supplier Edit</div>
+        <div class="card-header h5 text-primary font-weight-bold">Supplier Edit</div>
     <div class="card-body">
         <form action="{{ route('suppliers.update', $supplier->id) }}" method="post" enctype="multipart/form-data">
             @method('PUT')
@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div class="form-group">
                     <label for="email_${index}" class="col-form-label">{{ __('* E-Mail Address') }}</label>
 
-                    <input id="email_${index}" type="email" class="form-control @error('row.${index}.email') is-invalid @enderror" name="row[${index}][email]"
+                    <input id="email_${index}" type="email" class="form-control form-control-sm @error('row.${index}.email') is-invalid @enderror" name="row[${index}][email]"
                         value="{{ old('email') }}" placeholder="example@gmail.com" autocomplete="on">
 
                     @error('row.${index}.email')
@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div class="form-group">
                     <label for="phone_${index}" class="col-form-label">{{ __('* Phone') }}</label>
 
-                    <input id="phone_${index}" type="phone" class="form-control @error('row.${index}.phone') is-invalid @enderror" name="row[${index}][phone]"
+                    <input id="phone_${index}" type="phone" class="form-control form-control-sm @error('row.${index}.phone') is-invalid @enderror" name="row[${index}][phone]"
                         value="{{ old('phone') }}" placeholder="+959 999 999 999" autocomplete="on">
 
                     @error('row.${index}.phone')
@@ -80,7 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div class="form-group">
                     <label for="state_${index}" class="col-form-label">{{ __('* State & Region') }}</label>
 
-                    <select name="row[${index}][state]" id="state_${index}" class="custom-select @error('row.${index}.state') is-invalid @enderror"
+                    <select name="row[${index}][state]" id="state_${index}" class="custom-select custom-select-sm @error('row.${index}.state') is-invalid @enderror"
                         value="{{ old('state') }}" onclick="selectState(${index})" autocomplete="off">
                         <option value="">Choose State & Region</option>
                         @foreach ($states as $state)
@@ -102,7 +102,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <label for="city_${index}" class="col-form-label">{{ __('* City') }}</label>
 
                     <select id="city_${index}" name="row[${index}][city]" disabled title="Firstly, you need to select state."
-                        class="custom-select @error('row.${index}.city') is-invalid @enderror" value="{{ old('city') }}" onclick="selectCity(${index})"
+                        class="custom-select custom-select-sm @error('row.${index}.city') is-invalid @enderror" value="{{ old('city') }}" onclick="selectCity(${index})"
                         autocomplete="off">
                         <option value="0">Choose City</option>
                     </select>
@@ -119,7 +119,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <label for="township_${index}" class="col-form-label">{{ __('* Township & Ward') }}</label>
 
                     <select id="township_${index}" name="row[${index}][township]" disabled title="Firstly, you need to select city."
-                        class="custom-select @error('row.${index}.township') is-invalid @enderror" value="{{ old('township') }}" onclick="selectTownship(${index})"
+                        class="custom-select custom-select-sm @error('row.${index}.township') is-invalid @enderror" value="{{ old('township') }}" onclick="selectTownship(${index})"
                         autocomplete="off">
                         <option value="0">Choose Township & Wrad</option>
                     </select>
@@ -136,7 +136,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <label for="address_${index}" class="col-form-label">{{ __('* Address') }}</label>
 
                     <textarea id="address_${index}" name="row[${index}][address]" disabled title="Firstly, you need to select township."
-                        class="form-control @error('address') is-invalid @enderror" value="{{ old('address') }}"
+                        class="form-control form-control-sm @error('address') is-invalid @enderror" value="{{ old('address') }}"
                         placeholder="No(541), Nga Moe Yeik 4st, Nga Moe Yeik Quarter" autocomplete="address"></textarea>
                     @error('address')
                     <span class="invalid-feedback" role="alert">

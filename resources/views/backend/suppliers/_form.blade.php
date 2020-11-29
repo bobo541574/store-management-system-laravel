@@ -13,9 +13,9 @@
             <div class="form-group mx-auto" id="custom-file">
                 <input type="hidden" name="logo" value="{{ old('logo', $supplier->logo ?? '') }}">
 
-                <input type="file" id="photo" class="type_file form-control @error('logo') is-invalid @enderror"
+                <input type="file" id="photo" class="type_file form-control form-control-sm @error('logo') is-invalid @enderror"
                     name="logo" value="{{ old('logo') }}" />
-                <label for="photo" id="label" class="form-label">upload</label>
+                <label for="photo" id="label" class="form-label"  style="width: 100%">upload</label>
 
                 @error('logo')
                 <span class="invalid-feedback" role="alert">
@@ -34,7 +34,7 @@
         <div class="form-group">
             <label for="name" class="col-form-label">{{ __('* Company Name') }}</label>
 
-            <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name"
+            <input id="name" type="text" class="form-control form-control-sm @error('name') is-invalid @enderror" name="name"
                 value="{{ old('name', $supplier->name ?? '') }}" placeholder="John Doe" autocomplete="on" autofocus>
 
             @error('name')
@@ -73,7 +73,7 @@
 
 <div class="col-md-3 offset-md-9">
     <div class="form-group mb-0">
-        <button type="submit" id="submit" class="btn btn-primary col-md-12">
+        <button type="submit" id="submit" class="btn btn-sm btn-primary col-md-12">
             {{ $buttonText }}
         </button>
     </div>

@@ -3,16 +3,17 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Models\Brand;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use App\Http\Requests\ProductRequest;
-use App\Models\ColorAttribute;
 use App\Models\Order;
 use App\Models\Product;
-use App\Models\ProductAttribute;
-use App\Models\SizeAttribute;
 use App\Models\Supplier;
+use App\Models\SubCategory;
+use Illuminate\Http\Request;
+use App\Models\SizeAttribute;
+use App\Models\ColorAttribute;
+use App\Models\ProductAttribute;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\ProductRequest;
 
 class ProductController extends Controller
 {
@@ -23,7 +24,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = ProductAttribute::all();
+        $products = ProductAttribute::orderBy('arrived', 'desc')->get();
 
         return view('backend.products.index', compact('products'));
     }
@@ -35,14 +36,16 @@ class ProductController extends Controller
      */
     public function create()
     {
+        // dd(old('row'));
         (old('row') > 0) ? ($rowCount = count(old('row'))) : ($rowCount = 0);
 
-        $brands = Brand::all();
-        $suppliers = Supplier::all();
+        $subcategories = SubCategory::where('status', 'On')->orderBy('name')->get();
+        $brands = Brand::orderBy('name')->get();
+        $suppliers = Supplier::orderBy('name')->get();
         $colors = ColorAttribute::orderBy('name')->get();
         $sizes = SizeAttribute::orderBy('number')->get();
 
-        return view('backend.products.create', compact('brands', 'suppliers', 'colors', 'sizes', 'rowCount'));
+        return view('backend.products.create', compact('subcategories', 'brands', 'suppliers', 'colors', 'sizes', 'rowCount'));
     }
 
     /**
@@ -58,11 +61,12 @@ class ProductController extends Controller
         try {
 
             $product = Product::create([
+                'subcategory_id'  => $request->subcategory,
                 'brand_id'  => $request->brand,
                 'supplier_id' => $request->supplier,
                 'product_code' => $request->product_code,
                 'name'  => $request->name,
-                'arrived'   => $request->arrived
+                'arrived'   => now(),
             ]);
 
             $dir = '/img/product/';
@@ -86,7 +90,8 @@ class ProductController extends Controller
                     'price' => $attribute['price'],
                     'cost' => $attribute['cost'],
                     'description' => "This is a product attribute.",
-                    'status' => $attribute['status']
+                    'status' => $attribute['status'],
+                    'arrived'   => $attribute['arrived']
                 ]);
             }
 
@@ -94,6 +99,7 @@ class ProductController extends Controller
         } catch (\Exception $e) {
             DB::rollBack();
 
+            throw $e;
             return redirect()->route('products.index')->with('error', 'Hey, you have some error.');
         }
 
@@ -120,15 +126,15 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        // dd(old('row'));
         (old('row') > 0) ? ($rowCount = count(old('row'))) : ($rowCount = 0);
 
+        $subcategories = SubCategory::all();
         $brands = Brand::all();
         $suppliers = Supplier::all();
         $colors = ColorAttribute::orderBy('name')->get();
         $sizes = SizeAttribute::orderBy('number')->get();
 
-        return view('backend.products.edit', compact('product', 'brands', 'suppliers', 'colors', 'sizes', 'rowCount'));
+        return view('backend.products.edit', compact('product', 'subcategories', 'brands', 'suppliers', 'colors', 'sizes', 'rowCount'));
     }
 
     /**
@@ -145,11 +151,12 @@ class ProductController extends Controller
 
         try {
             $product = Product::findOrFail($id);
+            $product->subcategory_id  = $request->subcategory;
             $product->brand_id  = $request->brand;
             $product->supplier_id = $request->supplier;
             $product->product_code = $request->product_code;
             $product->name  = $request->name;
-            $product->arrived   = $request->arrived;
+            $product->arrived   = now();
             $product->save();
 
             $dir = '/img/product/';
@@ -179,6 +186,7 @@ class ProductController extends Controller
                 $attribute->cost    = $request->row[$key]['cost'];
                 $attribute->description = "This is a product attribute.";
                 $attribute->status  = $request->row[$key]['status'];
+                $attribute->arrived  = $request->row[$key]['arrived'];
                 $attribute->save();
             }
 
@@ -192,7 +200,8 @@ class ProductController extends Controller
                     'price' => $request->row[$key]['price'],
                     'cost' => $request->row[$key]['cost'],
                     'description' => "This is a product attribute.",
-                    'status' => $request->row[$key]['status']
+                    'status' => $request->row[$key]['status'],
+                    'arrived' => $request->row[$key]['arrived']
                 ]);
             }
 
@@ -200,7 +209,7 @@ class ProductController extends Controller
         } catch (\Exception $e) {
 
             DB::rollBack();
-
+            throw $e;
             return redirect()->route('products.index')->with('error', 'Hey, you have some error.');
         }
         return redirect()->route('products.index')->with('success', 'Your product has been updated.');
@@ -246,60 +255,94 @@ class ProductController extends Controller
         ]);
     }
 
-    public function showExtraCost(Product $model)
+    public function showExtraCost()
     {
-        $productArrived = [];
-        $productArrivedSupplier = [];
-        $products = Product::orderBy('arrived', 'desc')->get()->groupBy(['arrived', 'supplier_id']);
+        $productArrivedBySupplier = [];
+        $count = 0;
+        $products_supplier = Product::all();
+        foreach ($products_supplier->sortBy('supplier_id')->groupBy('supplier_id') as $supplier) {
 
-        // foreach ($products as $product) {
-        //     foreach ($product as $supplier) {
-        //         foreach ($supplier as $arrived) {
-        //             // echo "<pre>";
-        //             // echo $arrived->name . ", " . $arrived->supplier->name . ", " . $arrived->arrived;
-        //             // echo "</pre>";
-        //             array_push($productArrived, $arrived);
-        //         }
-        //         array_push($productArrivedSupplier, $productArrived);
-
-        //         // echo "<hr />";
-        //     }
-        // }
-        // dd($productArrivedSupplier[0][0]['name']);
-
-        return view('backend.products.extra_cost', compact('products', 'model'));
-    }
-
-    public function addExtraCost(Request $request, $id)
-    {
-        $supplier = Supplier::find($id);
-
-        $products = $supplier->products()->where('arrived', $request->arrived)->get();
-        $totalQuantity = 0;
-        $extra = 0;
-        foreach ($products as $product) {
-            foreach ($product->productAttrs as $attribute) {
-                $totalQuantity += $attribute->quantity;
-            }
-        }
-        $extra = $request->extra / $totalQuantity;
-
-        DB::beginTransaction();
-
-        try {
-            foreach ($products as $product) {
-                foreach ($product->productAttrs as $attribute) {
-                    $attribute->extra = $extra;
-                    $attribute->save();
+            foreach ($supplier as $products) {
+                foreach ($products->productAttrs as $attribute) {
+                    array_push($productArrivedBySupplier, $attribute);
                 }
+                // foreach ($products->productAttrs->groupBy('arrived') as $product) {
+                //     array_push($productArrivedBySupplier, $product);
+                // }
             }
-
-            DB::commit();
-        } catch (\Exception $e) {
-            DB::rollBack();
-
-            return redirect()->route('attributes.show.extra')->with('error', 'Hey, you have some error.');
         }
-        return redirect()->route('attributes.show.extra')->with('success', 'Your product has been updated.');
+
+
+
+        // // $productAttrs = ProductAttribute::orderBy('arrived')->get()->groupBy('arrived');
+        // // foreach ($productAttrs as $attribute) {
+        // //     array_push($productArrivedSupplier, $attribute);
+        // //     // array_push($productArrivedSupplier, $attribute->pluck('cost'));
+        // // }
+        // dd($productArrivedBySupplier[0]);
+
+        dd($productArrivedBySupplier);
+        // // dd($products_supplier);
+        // dd($productsBySupplier[0]['2020-10-11']->first()->product_id);
+        // // dd(collect($productArrivedSupplier[2]));
+
+        return view('backend.products.extra_cost', compact('productArrivedBySupplier'));
     }
+
+    public function addExtraCostToAttributes(Request $request)
+    {
+
+        $check = array_column(json_decode($request->check), 'id');
+        if ($check == null) {
+            return redirect()->back()->with('info', "Hey, you have not been anything checked!");
+        }
+
+        $attributes = ProductAttribute::whereIn('id', $check)->get();
+
+        $extra = $request->extra / $attributes->pluck('quantity')->sum();
+
+        foreach ($attributes as $attribute) {
+            $attribute->extra = $extra;
+            $attribute->save();
+        }
+
+        return redirect()->back()->with('success', "You have been updated extra cost!");
+    }
+
+    // public function addExtraCost(Request $request, $id)
+    // {
+    //     if ($request->extra == 0) {
+    //         return redirect()->route('attributes.show.extra')->with('info', 'Your have not filled extra cost.');
+    //     }
+
+    //     $supplier = Supplier::find($id);
+
+    //     $products = $supplier->products()->where('arrived', $request->arrived)->get();
+    //     $totalQuantity = 0;
+    //     $extra = 0;
+    //     foreach ($products as $product) {
+    //         foreach ($product->productAttrs as $attribute) {
+    //             $totalQuantity += $attribute->quantity;
+    //         }
+    //     }
+    //     $extra = $request->extra / $totalQuantity;
+
+    //     DB::beginTransaction();
+
+    //     try {
+    //         foreach ($products as $product) {
+    //             foreach ($product->productAttrs as $attribute) {
+    //                 $attribute->extra = $extra;
+    //                 $attribute->save();
+    //             }
+    //         }
+
+    //         DB::commit();
+    //     } catch (\Exception $e) {
+    //         DB::rollBack();
+
+    //         return redirect()->route('attributes.show.extra')->with('error', 'Hey, you have some error.');
+    //     }
+    //     return redirect()->route('attributes.show.extra')->with('success', 'Your product has been updated.');
+    // }
 }

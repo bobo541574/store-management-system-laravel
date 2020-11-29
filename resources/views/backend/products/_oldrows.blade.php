@@ -5,7 +5,7 @@ $rowCount = count($oldRow);
 <div id="product">
     @foreach ($oldRow as $key => $value)
     <div class="row" id="product_node_{{ $key }}">
-        <input type="hidden" name="row[{{ $key }}][id]" id="attribute_{{ $key }}" value="{{ $value['id'] }}">
+        {{-- <input type="hidden" name="row[{{ $key }}][id]" id="attribute_{{ $key }}" value="{{ $value['id'] }}"> --}}
 
         <div class="col-md-12">
             <hr style="border: 1px solid #cfcfcf" />
@@ -13,9 +13,24 @@ $rowCount = count($oldRow);
 
         <div class="col-md-2">
             <div class="form-group">
+                <label for="arrived" class="col-form-label">{{ __('Arrived') }}</label>
+
+                <input id="arrived_{{ $key }}" type="date" class="form-control form-control-sm 
+                    @error("row.$key.arrived") is-invalid @enderror" name="row[{{ $key }}][arrived]" value="{{ old('arrived') }}">
+
+                @error("row.$key.arrived")
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+                @enderror
+            </div>
+        </div>
+
+        <div class="col-md-2">
+            <div class="form-group">
                 <label for="color" class="col-form-label mx-auto">{{ __('Color') }}</label>
 
-                <select name="row[{{ $key }}][color]" id="color_{{ $key }}" class="custom-select 
+                <select name="row[{{ $key }}][color]" id="color_{{ $key }}" class="custom-select custom-select-sm 
                     @error("row.$key.color") is-invalid @enderror" value="{{ old('color') }}" autocomplete="off">
                     <option value="">Choose color</option>
                     @foreach ($colors as $color)
@@ -37,7 +52,7 @@ $rowCount = count($oldRow);
             <div class="form-group">
                 <label for="size" class="col-form-label  mx-auto">{{ __('Size') }}</label>
 
-                <select name="row[{{ $key }}][size]" id="size_{{ $key }}" class="custom-select @error("row.$key.size")
+                <select name="row[{{ $key }}][size]" id="size_{{ $key }}" class="custom-select custom-select-sm @error("row.$key.size")
                     is-invalid @enderror" value="{{ old('size') }}" autocomplete="off">
                     <option value="">Choose size</option>
                     @foreach ($sizes as $size)
@@ -59,7 +74,7 @@ $rowCount = count($oldRow);
             <div class="form-group">
                 <label for="quantity_{{ $key }}" class="col-form-label  mx-auto">{{ __('Quantity') }}</label>
 
-                <input id="quantity_{{ $key }}" class="form-control @error("row.$key.quantity") is-invalid @enderror"
+                <input id="quantity_{{ $key }}" class="form-control form-control-sm @error("row.$key.quantity") is-invalid @enderror"
                     name="row[{{ $key }}][quantity]" type="number" value="{{ $value['quantity'] }}"
                     onclick="priceCalculator({{ $key }})" autocomplete="on" placeholder="0">
 
@@ -76,7 +91,7 @@ $rowCount = count($oldRow);
             <div class="form-group">
                 <label for="price_{{ $key }}" class="col-form-label  mx-auto">{{ __('Price') }}</label>
 
-                <input id="price_{{ $key }}" class="form-control @error("row.$key.price") is-invalid @enderror"
+                <input id="price_{{ $key }}" class="form-control form-control-sm @error("row.$key.price") is-invalid @enderror"
                     name="row[{{ $key }}][price]" type="number" value="{{ $value['price'] }}"
                     onclick="priceCalculator({{ $key }})" autocomplete="on" placeholder="0">
 
@@ -93,7 +108,7 @@ $rowCount = count($oldRow);
             <div class="form-group">
                 <label for="total_price_{{ $key }}" class="col-form-label  mx-auto">{{ __('Total Price') }}</label>
 
-                <input id="total_price_{{ $key }}" class="form-control @error("row.$key.total_price") is-invalid
+                <input id="total_price_{{ $key }}" class="form-control form-control-sm @error("row.$key.total_price") is-invalid
                     @enderror" name="row[{{ $key }}][total_price]" type="number"
                     value="{{ $value['total_price'] ?? '' }}" autocomplete="on" placeholder="0" disabled>
 
@@ -110,7 +125,7 @@ $rowCount = count($oldRow);
             <div class="form-group">
                 <label for="cost" class="col-form-label  mx-auto">{{ __('Cost') }}</label>
 
-                <input id="cost_{{ $key }}" class="form-control @error("row.$key.cost") is-invalid @enderror"
+                <input id="cost_{{ $key }}" class="form-control form-control-sm @error("row.$key.cost") is-invalid @enderror"
                     name="row[{{ $key }}][cost]" type="number" value="{{ $value['cost'] }}"
                     onclick="costCalculator({{ $key }})" autocomplete="on" placeholder="0">
 
@@ -128,7 +143,7 @@ $rowCount = count($oldRow);
                 <label for="total_cost" class="col-form-label  mx-auto">{{ __('Total Cost') }}</label>
 
                 <input id="total_cost_{{ $key }}"
-                    class="form-control @error('row.{{ $key }}.total_cost') is-invalid @enderror"
+                    class="form-control form-control-sm @error('row.{{ $key }}.total_cost') is-invalid @enderror"
                     name="row[{{ $key }}][total_cost]" type="number" value="{{ $value['total_cost'] ?? '' }}"
                     autocomplete="on" placeholder="0" disabled>
 
@@ -145,11 +160,11 @@ $rowCount = count($oldRow);
             <div class="form-group">
                 <label for="status" class="col-form-label">{{ __('Status') }}</label>
 
-                <select id="status_{{ $key }}" class="custom-select @error("row.$key.status") is-invalid @enderror"
+                <select id="status_{{ $key }}" class="custom-select custom-select-sm @error("row.$key.status") is-invalid @enderror"
                     name="row[{{ $key }}][status]" value="{{ old('status') }}" autocomplete="off">
                     <option value="">Choose status</option>
-                    <option value="1" {{ ("1" == $value['status']) ? 'selected' : '' }}>On</option>
-                    <option value="0" {{ ("0" == $value['status']) ? 'selected' : ''  }}>Off</option>
+                    <option value="On" {{ ("On" == $value['status']) ? 'selected' : '' }}>On</option>
+                    <option value="Off" {{ ("Off" == $value['status']) ? 'selected' : ''  }}>Off</option>
                 </select>
 
                 @error("row.$key.status")

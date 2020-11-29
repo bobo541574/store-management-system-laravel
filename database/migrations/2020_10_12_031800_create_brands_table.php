@@ -15,12 +15,12 @@ class CreateBrandsTable extends Migration
     {
         Schema::create('brands', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('subcategory_id');
             $table->string('name');
             $table->string('logo');
             $table->string('description')->default('This is a description of brand');
-            $table->boolean('status')->default(1);
+            $table->enum('status', ['On', 'Off'])->default('On');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

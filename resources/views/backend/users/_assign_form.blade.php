@@ -4,7 +4,7 @@
     <input type="hidden" name="user_id" value="{{ $user->id }}">
     <label for="name" class="col-form-label">{{ __('Name') }}</label>
 
-    <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name"
+    <input id="name" type="text" class="form-control form-control-sm @error('name') is-invalid @enderror" name="name"
         value="{{ old('name', $user->name ?? '') }}"
         placeholder="eg. admin, staff & ...." autocomplete="on" autofocus>
 
@@ -17,7 +17,7 @@
 
 <div class="form-group">
     <label for="role" class="col-form-label">{{ __('Role') }}</label>
-    <select name="role[]" id="role" class="custom-select @error('role') is-invalid @enderror"
+    <select name="role[]" id="role" class="custom-select custom-select-sm @error('role') is-invalid @enderror"
         value="{{ old('role') }}" autocomplete="off" multiple>
         <option value="">Choose Role</option>
         @foreach ($roles as $role)
@@ -38,5 +38,5 @@
 </div>
 
 <div class="form-group">
-    <button class="btn btn-primary">{{ $buttonText }}</button>
+    <button class="btn btn-sm btn-primary">{{ $buttonText }}</button>
 </div>
